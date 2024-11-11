@@ -2,14 +2,16 @@ import React from 'react'
 import '../App.css'
 import { useState, useEffect } from "react"; //hooks
 import { useFetch } from '../useFetch';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import UsersTable from "../components/UsersTable";
 
-export default function Usuarios() {
+export default function Users() {
   //const { data, loading, error, handleCancelRequest } = useFetch("https://jsonplaceholder.typicode.com/users");
-  const validar = false;
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("se ejecuta el useEffect")
@@ -18,19 +20,30 @@ export default function Usuarios() {
 
 
   const loadData = async () => {
+    setLoading(true);
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((json) => setData([...json]))
       .finally(() => setLoading(false));
-    console.log(data);
   };
   return (
     <>
       <div className='usuariosContenedor'>
         {
-          data?.length > 0 ? (null):(<Button className='mb-5' label={'Cargar datos'} severity='danger' onClick={loadData}></Button>)
+          data?.length > 0 ? (
+            <UsersTable datos={data}></UsersTable>
+          ) : (
+            <>
+              {
+                loading ? (
+                  <ProgressSpinner></ProgressSpinner>
+                ) : (
+                  <Button className='mb-5' label={'Cargar lista de usuarios'} severity='danger' onClick={loadData}></Button>
+                )
+              }
+            </>
+          )
         }
-        <UsersTable datos={data}></UsersTable>
       </div>
     </>
   )

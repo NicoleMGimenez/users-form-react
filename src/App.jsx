@@ -12,7 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 import { Home } from "./pages/Home";
-import Usuarios from "./pages/Usuarios";
+import Users from "./pages/Users";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           <div className="routeContainer">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="usuarios" element={<Usuarios />} />
+              <Route path="usuarios" element={<Users />} />
             </Routes>
           </div>
 
