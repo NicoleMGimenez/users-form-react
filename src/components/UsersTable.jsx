@@ -6,8 +6,12 @@ import { Dialog } from 'primereact/dialog';
 import { AddUserForm } from './AddUserForm';
 import { UpdateUserForm } from './UpdateUserForm';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteUserThunk } from '../store/users/users.thunks';
 
 export default function UsersTable({ datos }) {
+  const dispatch = useDispatch();
+
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -16,24 +20,30 @@ export default function UsersTable({ datos }) {
     return <img src={`https://via.placeholder.com/600/${rowData.url}`} className="w-6rem shadow-2 border-round" />;
   };
 
-  const deleteUser = (event) => {
+  // Acciones para eliminar un usuario de la tabla
+  const deleteUser = (event, user) => {
     confirmPopup({
       target: event.currentTarget,
       message: '¿Está seguro de eliminar este usuario?',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
-      rejectLabel: 'No'
+      rejectLabel: 'No',
+      accept: () => dispatch(deleteUserThunk(user.id)), 
+      reject: () => console.log("Selecciono que no")
     });
   };
 
+  // Elementos a mostrar en la columna de acciones
   const actionsTemplate = (rowData) => {
     const user = rowData;
     return (
       <>
         {/* Boton editar */}
         <Button
-          onClick={() => {console.log(rowData),
-            setSelectedUser(rowData), setShowUpdateForm(true)}
+          onClick={() => {
+            console.log(rowData),
+            setSelectedUser(rowData), setShowUpdateForm(true)
+          }
           }
           severity="help"
           icon="pi pi-pencil"
@@ -42,7 +52,7 @@ export default function UsersTable({ datos }) {
 
         {/* Boton eliminar */}
         <Button
-          onClick={(event) => deleteUser(event)}
+          onClick={(event) => deleteUser(event, user)}
           severity="danger"
           icon="pi pi-times"
           className='m-2'>
@@ -50,7 +60,7 @@ export default function UsersTable({ datos }) {
 
         {/* Boton eliminar */}
         <Button
-          onClick={()=>console.log(user)}
+          onClick={() => console.log(user)}
           severity="secondary"
           icon="pi pi-eye"
           className='m-2'>
