@@ -47,6 +47,14 @@ export default function UsersTable({ datos }) {
           icon="pi pi-times"
           className='m-2'>
         </Button>
+
+        {/* Boton eliminar */}
+        <Button
+          onClick={()=>console.log(user)}
+          severity="secondary"
+          icon="pi pi-eye"
+          className='m-2'>
+        </Button>
       </>
     );
   }
@@ -67,6 +75,8 @@ export default function UsersTable({ datos }) {
       >
         <Column field="name" header="Nombre"></Column>
         <Column field="email" header="Email"></Column>
+        <Column field="address.city" header="Ciudad"></Column>
+
         <Column field="acciones" header="Acciones" body={actionsTemplate}></Column>
       </DataTable>
 
