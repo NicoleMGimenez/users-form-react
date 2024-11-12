@@ -7,31 +7,26 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import UsersTable from "../components/UsersTable";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUsersThunk } from '../store/users/users.thunks';
 
 export default function Users() {
-  //const { data, loading, error, handleCancelRequest } = useFetch("https://jsonplaceholder.typicode.com/users");
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log("se ejecuta el useEffect")
-    console.log(data)
-  }, [data]) //variable que controla cuando cambia los datos
-
+  const users = useSelector((state) => state?.users?.users); 
+  const loading = useSelector((state) => state?.users?.loading);   
+  
+  const dispatch = useDispatch(); 
 
   const loadData = async () => {
-    setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => setData([...json]))
-      .finally(() => setLoading(false));
+    dispatch(getUsersThunk());     
   };
+
   return (
     <>
       <div className='usuariosContenedor'>
         {
-          data?.length > 0 ? (
-            <UsersTable datos={data}></UsersTable>
+          users?.length > 0 ? (
+            <UsersTable datos={users}></UsersTable>
           ) : (
             <>
               {
