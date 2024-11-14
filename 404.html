@@ -8,7 +8,7 @@
     // Redirigir automáticamente al 'basename' de React Router
     const pathname = window.location.pathname;
     if (pathname.startsWith('/users-form-react')) {
-      window.location.replace(`/users-form-react${pathname}`);
+      window.location.replace(`/users-form-react/${pathname}`);
     } else {
       window.location.replace('/users-form-react/');
     }
