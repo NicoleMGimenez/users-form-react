@@ -8,6 +8,7 @@ import { UpdateUserForm } from './UpdateUserForm';
 import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteUserThunk } from '../store/users/users.thunks';
+import { InfoUser } from './InfoUser';
 
 export default function UsersTable({ datos }) {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ export default function UsersTable({ datos }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+
+  const [showInfoUser, setShowInfoUser] = useState(false);
 
   const imageBodyTemplate = (rowData) => {
     return <img src={`https://via.placeholder.com/600/${rowData.url}`} className="w-6rem shadow-2 border-round" />;
@@ -28,7 +31,7 @@ export default function UsersTable({ datos }) {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Si',
       rejectLabel: 'No',
-      accept: () => dispatch(deleteUserThunk(user.id)), 
+      accept: () => dispatch(deleteUserThunk(user.id)),
       reject: () => console.log("Selecciono que no")
     });
   };
@@ -41,13 +44,12 @@ export default function UsersTable({ datos }) {
         {/* Boton editar */}
         <Button
           onClick={() => {
-            console.log(rowData),
             setSelectedUser(rowData), setShowUpdateForm(true)
           }
           }
           severity="help"
           icon="pi pi-pencil"
-          className='m-2'>
+          className='m-2' rounded>
         </Button>
 
         {/* Boton eliminar */}
@@ -55,15 +57,18 @@ export default function UsersTable({ datos }) {
           onClick={(event) => deleteUser(event, user)}
           severity="danger"
           icon="pi pi-times"
-          className='m-2'>
+          className='m-2' rounded>
         </Button>
 
-        {/* Boton eliminar */}
+        {/* Boton ver info */}
         <Button
-          onClick={() => console.log(user)}
+          onClick={() => {
+            setSelectedUser(rowData), setShowInfoUser(true)
+          }
+          }
           severity="secondary"
           icon="pi pi-eye"
-          className='m-2'>
+          className='m-2' rounded>
         </Button>
       </>
     );
@@ -83,22 +88,29 @@ export default function UsersTable({ datos }) {
           </>
         }
       >
-        <Column field="name" header="Nombre"></Column>
-        <Column field="email" header="Email"></Column>
-        <Column field="address.city" header="Ciudad"></Column>
-
-        <Column field="acciones" header="Acciones" body={actionsTemplate}></Column>
+        <Column field="username" header="Usuario" style={{ width: '150px' }}></Column>
+        <Column field="name" header="Nombre" style={{ width: '150px' }}></Column>
+        <Column field="email" header="Email" style={{ width: '200px' }}></Column>
+        {/* <Column field="address.city" header="Ciudad" style={{ width: '150px' }}></Column> */}
+        <Column field="acciones" body={actionsTemplate} bodyStyle={{ textAlign: 'center' }} style={{ width: '150px' }}></Column>
       </DataTable>
+
+
 
       <ConfirmPopup />
 
-      <Dialog header="Agregar usuario" visible={showAddForm} style={{ width: '60vw' }} onHide={() => { if (!showAddForm) return; setShowAddForm(false); }} draggable={false}>
-        <AddUserForm></AddUserForm>
+      <Dialog header="Agregar nuevo usuario" visible={showAddForm} style={{ width: '60vw' }} onHide={() => { if (!showAddForm) return; setShowAddForm(false); }} draggable={false}>
+        <AddUserForm close={setShowAddForm} ></AddUserForm>
       </Dialog>
 
       <Dialog header="Editar usuario" visible={showUpdateForm} style={{ width: '60vw' }} onHide={() => { if (!showUpdateForm) return; setShowUpdateForm(false); }} draggable={false}>
-        <UpdateUserForm user={selectedUser} ></UpdateUserForm>
+        <UpdateUserForm user={selectedUser} close={setShowUpdateForm}></UpdateUserForm>
       </Dialog>
+
+      <Dialog header="Ver usuario" visible={showInfoUser} style={{ width: '60vw' }} onHide={() => { if (!showInfoUser) return; setShowInfoUser(false); }} draggable={false}>
+        <InfoUser user={selectedUser}></InfoUser>
+      </Dialog>
+
     </div>
   )
 }
