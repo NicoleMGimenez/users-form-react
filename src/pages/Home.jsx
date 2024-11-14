@@ -1,4 +1,3 @@
-import imagen from '../assets/2.png';
 import { Button } from 'primereact/button';
 import Steps from '../components/Steps';
 {/* <div>
@@ -13,10 +12,6 @@ export const Home = () => {
         <div className="typewriter">
           <h1>Bienvenido "usuario"!</h1>
         </div>
-        {/* <div className="botones">
-        <Button label="Ver usuarios" severity="warning" outlined />
-        <Button label="Cargar usuarios" severity="warning" outlined />
-      </div> */}
       </div>
     </>
 

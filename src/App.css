@@ -15,6 +15,11 @@
   padding: 2rem;
 }
 
+.headerContainer .p-button.p-button-rounded {
+  border-radius: 2rem;
+  color: whitesmoke;
+}
+
 .routeContainer {
   flex: 1; /* Toma todo el espacio disponible */
   /*min-height: 80vh;  Ajusta según el tamaño deseado */
@@ -22,29 +27,60 @@
   box-sizing: border-box;
 }
 
-.tablaContainer{
-  background-color: yellowgreen;
+/* CSS para la tabla */
+.tablaContainer {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  overflow-x: auto; 
 }
 
-.homeContainer{
+.homeContainer {
   height: 80vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding-left: 3rem;
+  padding-left: 3vw; /* Ajuste flexible en unidades relativas a la ventana */
 }
 
 .homeContainer .typewriter h1 {
   color: #fff;
   font-family: monospace;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
+  font-size: 3vw; /* Tamaño de fuente flexible */
+  overflow: hidden;
+  border-right: .15em solid orange;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .1em;
   animation: 
     typing 3.5s steps(30, end),
     blink-caret .5s step-end infinite;
+}
+
+/* Ajustes para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+  .homeContainer {
+    padding-left: 2rem;
+    height: 70vh;
+  }
+
+  .homeContainer .typewriter h1 {
+    font-size: 6vw;
+  }
+}
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+  .homeContainer {
+    padding-left: 1rem;
+    height: 60vh;
+    justify-content: center; /* Centra el texto en pantallas pequeñas */
+  }
+
+  .homeContainer .typewriter h1 {
+    font-size: 7vw;
+    letter-spacing: .1em;
+  }
 }
 
 /* The typing effect */
@@ -59,13 +95,3 @@
   50% { border-color: orange }
 }
 
-.homeContainer .botones{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-/* .footerContainer{
-  background-color: #895686;
-  height: 20vh; 
-} */
