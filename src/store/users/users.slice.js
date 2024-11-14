@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUsersThunk, createUserThunk, deleteUserThunk } from './users.thunks';
+import { getUsersThunk, createUserThunk, deleteUserThunk, updateUserThunk } from './users.thunks';
 
 const usersSlice = createSlice({
   name: 'users',
@@ -51,6 +51,24 @@ const usersSlice = createSlice({
         state.users = state.users.filter((user) => user.id !== removeUserId);
       })
       .addCase(deleteUserThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      //Actualizar
+      .addCase(updateUserThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserThunk.fulfilled, (state, action) => {
+        const updatedUser = action.payload;
+        const index = state.users.findIndex(user => user.id === updatedUser.id);
+        if (index !== -1) {
+          state.users[index] = updatedUser;
+          //console.log(updatedUser)
+        }
+      })
+      .addCase(updateUserThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
