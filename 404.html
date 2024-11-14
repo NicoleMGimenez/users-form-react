@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
-  <title>Redirecting...</title>
+  <meta http-equiv="refresh" content="0; url=/users-form-react/">
   <script>
     // Redirigir automáticamente al 'basename' de React Router
-    const currentUrl = window.location.pathname + window.location.search + window.location.hash;
-
-    if (!currentUrl.includes('/users-form-react')) {
-      const redirectUrl = '/users-form-react' + currentUrl;
-      window.location.replace(redirectUrl);
+    const pathname = window.location.pathname;
+    if (pathname.startsWith('/users-form-react')) {
+      window.location.replace('/users-form-react/');
+    } else {
+      window.location.replace(`/users-form-react${pathname}`);
     }
   </script>
 </head>
+
 <body>
 </body>
+
 </html>
