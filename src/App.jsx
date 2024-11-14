@@ -26,12 +26,11 @@ function App() {
               <Route path="usuarios" element={<Users />} />
             </Routes>
           </div>
-
+          <div className="footerContainer">
+            <Footer />
+          </div>
         </PrimeReactProvider>
       </div>
-      {/* <div className="footerContainer">
-        <Footer />
-      </div> */}
     </>
   );
 }
