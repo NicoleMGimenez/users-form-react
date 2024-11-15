@@ -1,6 +1,3 @@
-import { Button } from 'primereact/button';
-import Steps from '../components/Steps';
-import Footer from "../layouts/Footer";
 
 export const Home = () => {
   return (

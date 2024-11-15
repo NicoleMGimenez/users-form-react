@@ -12,5 +12,6 @@ export default defineConfig({
         path.resolve(__dirname, 'src'),           // Asegura acceso a la carpeta src
       ]
     }
-  }
+  },
+  base: "https://NicoleMGimenez.github.io/users-form-react"
 })

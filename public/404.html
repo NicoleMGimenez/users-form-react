@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=/users-form-react/">
+  <script>
+    // Redirigir automáticamente al 'basename' de React Router
+    const pathname = window.location.pathname;
+    if (pathname.startsWith('/users-form-react')) {
+      window.location.replace('/users-form-react/');
+    } else {
+      window.location.replace(`/users-form-react${pathname}`);
+    }
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

@@ -20,6 +20,12 @@
   color: whitesmoke;
 }
 
+.footerContainer .p-button.p-button-rounded {
+  border-radius: 2rem;
+  color: whitesmoke;
+  border-color: blueviolet;
+}
+
 .routeContainer {
   flex: 1; /* Toma todo el espacio disponible */
   /*min-height: 80vh;  Ajusta según el tamaño deseado */
