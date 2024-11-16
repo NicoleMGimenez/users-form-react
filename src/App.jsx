@@ -11,6 +11,7 @@ import Footer from "./layouts/Footer";
 import { Home } from "./pages/Home";
 import Users from "./pages/Users";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Cryptos } from "./pages/Cryptos";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/usuarios" element={<Users />} />
+              <Route path="/cryptos" element={<Cryptos />} />
             </Routes>
           </div>
           <div className="footerContainer">

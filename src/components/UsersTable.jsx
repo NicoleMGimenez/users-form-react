@@ -77,6 +77,7 @@ export default function UsersTable({ datos }) {
   return (
     <div className='tablaContainer'>
       <DataTable
+      sortMode="multiple"
         value={datos}
         tableStyle={{ minWidth: '50rem' }}
         paginator
@@ -88,14 +89,13 @@ export default function UsersTable({ datos }) {
           </>
         }
       >
+        <Column sortable field='id' header="N°" style={{ width: '50px' }}></Column>
         <Column field="username" header="Usuario" style={{ width: '150px' }}></Column>
         <Column field="name" header="Nombre" style={{ width: '150px' }}></Column>
         <Column field="email" header="Email" style={{ width: '200px' }}></Column>
         {/* <Column field="address.city" header="Ciudad" style={{ width: '150px' }}></Column> */}
         <Column field="acciones" body={actionsTemplate} bodyStyle={{ textAlign: 'center' }} style={{ width: '150px' }}></Column>
       </DataTable>
-
-
 
       <ConfirmPopup />
 

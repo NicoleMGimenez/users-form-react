@@ -7,6 +7,7 @@ export default function Header() {
     <div className='headerContainer'>
       <Link to="/"><Button icon="pi pi-home" rounded outlined label="Home" style={{ margin: '5px' }} /></Link>
       <Link to="/usuarios"><Button icon="pi pi-user" rounded outlined label="Usuarios" style={{ margin: '5px' }} /></Link>
+      <Link to="/cryptos"><Button icon="pi pi-bitcoin" rounded outlined label="Cryptos" style={{ margin: '5px' }} /></Link>
       <Outlet />
     </div>
   )
