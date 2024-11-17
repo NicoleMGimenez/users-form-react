@@ -10,12 +10,12 @@ import Header from "./layouts/Header";
 import Footer from "./layouts/Footer";
 import { Home } from "./pages/Home";
 import Users from "./pages/Users";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Cryptos } from "./pages/Cryptos";
 
 function App() {
   return (
-    <Router basename="/users-form-react">
+    <Router>
       <div className="appContainer">
         <PrimeReactProvider>
           <Header />

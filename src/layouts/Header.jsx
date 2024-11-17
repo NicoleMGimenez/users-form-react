@@ -1,5 +1,5 @@
-import React from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 
 export default function Header() {
