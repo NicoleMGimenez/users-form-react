@@ -12,6 +12,7 @@ import { Home } from "./pages/Home";
 import Users from "./pages/Users";
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Cryptos } from "./pages/Cryptos";
+import { Other } from "./pages/Other";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/usuarios" element={<Users />} />
               <Route path="/cryptos" element={<Cryptos />} />
+              <Route path="/others" element={<Other />} />
             </Routes>
           </div>
           <div className="footerContainer">
