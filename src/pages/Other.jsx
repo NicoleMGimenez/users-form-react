@@ -24,7 +24,7 @@ export const Other = () => {
                 playbackRate={1.75}
               />
             </div>
-            <p>Sistema de chek-in para un hotel en Tilcara-Jujuy. Cuenta con un formulario para registrarse, canva para firmar
+            <p>Sistema de check-in para un hotel en Tilcara-Jujuy. Cuenta con un formulario para registrarse, canva para firmar
               y un CRUD para empleados y visitantes.</p>
             <a href="https://github.com/JMReader/RinconesDeJujuy.git" style={{color:'whitesmoke'}} ><span>Link a repositorio en GitHub</span></a>
           </div>
@@ -68,7 +68,7 @@ export const Other = () => {
           </div>
         </div>
       </div>
-      <h6>Disclaimer: Los videos utilizados fueron el projecto entregado al cliente, el uso o funcionamiento actual depende del mismo.</h6>
+      <h6>Disclaimer: Los videos utilizados fueron el proyecto entregado al cliente, el uso o funcionamiento actual depende del mismo.</h6>
     </>
   )
 }
