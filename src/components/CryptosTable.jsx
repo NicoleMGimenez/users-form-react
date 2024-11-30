@@ -15,7 +15,7 @@ export const CryptosTable = ({ datos }) => {
   const priceTemplate = (rowData, columnField) => {
     return (
       <div>
-        <span>${rowData[columnField]}</span>
+        <span>$USD {rowData[columnField]}</span>
       </div>);
   };
 

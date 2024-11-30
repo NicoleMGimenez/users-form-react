@@ -101,3 +101,27 @@
   50% { border-color: orange }
 }
 
+.custom-button {
+  width: 100%;
+  background-color: #9C27B0;
+  color: white;
+  border-color: white;
+}
+
+@media (min-width: 768px) {
+  .custom-button {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-button {
+    width: 80%;
+  }
+}
+
+.imagenes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

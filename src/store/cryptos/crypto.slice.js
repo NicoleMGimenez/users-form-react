@@ -43,7 +43,7 @@ const cryptosSlice = createSlice({
       })
       .addCase(historyCryptoData.fulfilled, (state, action) => {
         state.loading = false;
-        state.historyCryptoData = action.payload;
+        state.historyCryptoData = [...state.historyCryptoData, action.payload];
       })
       .addCase(historyCryptoData.rejected, (state, action) => {
         state.loading = false;

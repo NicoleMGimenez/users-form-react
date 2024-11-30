@@ -2,41 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 import dayjs from 'dayjs';
 
-export const BarChartCrypto = ({ datos, dias }) => {
+export const BarChartCrypto = ({ datos, dias, monedas }) => {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
 
-  const fechas = datos.map(
-    (moneda) => {
-      const monedasDate = dayjs(moneda[0]).format('DD-MM-YYYY');
-      return monedasDate;
-    }
-  );
-  console.log(fechas);
+  // const fechas = datos.flatMap((moneda) =>
+  //   moneda.map((entrada) => {
+  //     const fechaFormateada = dayjs(entrada[0]).format("DD-MM-YYYY");
+  //     console.log("Fecha:", fechaFormateada);
+  //     return fechaFormateada;
+  //   })
+  // );
 
-  const precios = datos.map(
-    (moneda) =>{return moneda[1]}
-  )
-  console.log(precios);
-  
+  // // Extraer precios
+  // const precios = datos.flatMap((moneda) =>
+  //   moneda.map((entrada) => {
+  //     const precio = entrada[1];
+  //     console.log("Precio:", precio);
+  //     return precio;
+  //   })
+  // );
 
   useEffect(() => {
+    if (!datos || datos.length === 0 || !monedas || monedas.length === 0) { return; } 
+    const fechas = datos[0].map((entrada) => dayjs(entrada[0]).format("DD-MM-YYYY")); 
+    const datasets = datos.map((moneda, index) => { const precios = moneda.map((entrada) => entrada[1]); 
+      return { label: `Precio de ${monedas[index]?.id} en USD`, data: precios, fill: false, 
+      borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 
+      ${Math.floor(Math.random() * 255)}, 1)`, tension: 0.4 }; });
+    
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    const data = {
-      labels: fechas,
-      datasets: [
-        {
-          label: 'Precio en USD',
-          data: precios,
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--green-700'),
-          tension: 0.4
-        },
-      ]
-    };
+    const data = { labels: fechas, datasets: datasets };
     const options = {
       // maintainAspectRatio: false,
       aspectRatio: 0.6,
