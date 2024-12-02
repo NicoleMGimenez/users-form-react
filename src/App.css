@@ -63,15 +63,27 @@
     blink-caret .5s step-end infinite;
 }
 
+.homeContainer .mensaje{
+  color: #fff;
+  font-family: monospace;
+  font-size: 3vw; 
+}
+
 /* Ajustes para pantallas medianas (tablets) */
-@media (max-width: 768px) {
+@media (max-width: 428px) {
   .homeContainer {
     padding-left: 2rem;
     height: 70vh;
   }
 
   .homeContainer .typewriter h1 {
-    font-size: 6vw;
+    display: none;
+  }
+}
+
+@media (min-width: 428px) {
+  .homeContainer .mensaje h1 {
+    display: none;
   }
 }
 
@@ -83,9 +95,8 @@
     justify-content: center; /* Centra el texto en pantallas pequeñas */
   }
 
-  .homeContainer .typewriter h1 {
-    font-size: 6vw;
-    letter-spacing: .1em;
+  .p-message.p-message-info {
+    font-size: smaller;
   }
 }
 

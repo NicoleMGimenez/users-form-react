@@ -6,6 +6,9 @@ export const Home = () => {
         <div className="typewriter">
           <h1>Bienvenido "usuario"!</h1>
         </div>
+        <div className="mensaje">
+          <h1>Bienvenido "usuario"!</h1>
+        </div>
       </div>
     </>
   )
