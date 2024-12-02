@@ -24,13 +24,24 @@ export const BarChartCrypto = ({ datos, dias, monedas }) => {
   // );
 
   useEffect(() => {
-    if (!datos || datos.length === 0 || !monedas || monedas.length === 0) { return; } 
-    const fechas = datos[0].map((entrada) => dayjs(entrada[0]).format("DD-MM-YYYY")); 
-    const datasets = datos.map((moneda, index) => { const precios = moneda.map((entrada) => entrada[1]); 
-      return { label: `Precio de ${monedas[index]?.id} en USD`, data: precios, fill: false, 
-      borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 
-      ${Math.floor(Math.random() * 255)}, 1)`, tension: 0.4 }; });
+    if (!datos || datos.length === 0 || !monedas || monedas.length === 0) {
+      return;
+    }
     
+    const fechas = datos[0].map((entrada) => dayjs(entrada[0]).format("DD-MM-YYYY"));
+    const datasets = datos
+      .filter((moneda, index) => monedas[index] !== undefined) // Filtra las monedas undefined
+      .map((moneda, index) => {
+        const precios = moneda.map((entrada) => entrada[1]);
+        return {
+          label: `Precio de ${monedas[index].id} en USD`,
+          data: precios,
+          fill: false,
+          borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+          tension: 0.4
+        };
+      });
+        
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
