@@ -9,6 +9,7 @@ import { Calendar } from 'primereact/calendar';
 import { useMountEffect } from 'primereact/hooks';
 import { Messages } from 'primereact/messages';
 import { Card } from 'primereact/card';
+import { Message } from 'primereact/message';
 import dayjs from 'dayjs';
 import redarrow from '../assets/redarrow.png';
 import greenarrow from '../assets/greenarrow.png';
@@ -17,6 +18,7 @@ import '../App.css';
 export const CryptoConverter = () => {
   const dispatch = useDispatch();
   const cryptos = useSelector((state) => state?.cryptos?.cryptos);
+  const errors = useSelector((state) => state?.cryptos?.error);
   const cryptoData = useSelector((state) => state?.cryptos?.dateCryptoData);
   const cryptosLabels = useSelector((state) => state?.cryptos?.cryptosLabels);
   const [selectedCoin, setSelectedCoin] = useState(null);
@@ -98,78 +100,91 @@ export const CryptoConverter = () => {
     <>
       <Messages ref={msgs} />
       <h2 className='text-center'>Calculadora de ganancias</h2>
-      <div className="grid justify-content-center">
-        <div className="col-12 lg:col-6">
-          <div className="text-center font-bold">
-            <div className="flex flex-column md:flex-row">
-              <Dropdown
-                value={selectedCoin}
-                onChange={(e) => setSelectedCoin(e.value)}
-                options={transformedOptions}
-                placeholder="Selecciona una moneda"
-                className="w-full m-1"
-                filter
-                tooltip="Moneda seleccionada" tooltipOptions={{ position: 'top' }}
-              />
-
-              <Calendar
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                minDate={minDate}
-                maxDate={maxDate}
-                readOnlyInput
-                showIcon
-                className="w-full m-1"
-                placeholder="Selecciona la fecha de compra"
-                tooltip="Fecha de compra" tooltipOptions={{ position: 'top' }}
-              />
-              <Button label='Buscar' onClick={prices} icon="pi pi-search" className="custom-button m-1"
-                disabled={!selectedCoin || !date} />
-
-              <div>
-                <Dropdown disabled={cryptoData === null} value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.value)} options={currencyOptions} filter
-                  placeholder="USD" tooltip="Selecciona el tipo de cambio" tooltipOptions={{ position: 'top' }} className="w-full m-1" />
-              </div>
-            </div>
-            <br />
-
+      {
+        !errors ? (
+          <>
             <div className="grid justify-content-center">
               <div className="col-12 lg:col-6">
-                <div hidden={!showConverter}>
-                  <div className="card">
-                    <Card>
-                      <p className="m-0">
-                        <span> {cryptoData && `1.00 ${selectedCoin} = $${cryptos.find(coin => coin.id === selectedCoin)?.current_price.toFixed(2)}`} </span>
-                        <p style={{ fontWeight: 'lighter', fontSize: '14px' }} >Valor actual de {selectedCoin} el {formatedDate}</p>
-                      </p>
-                    </Card>
-                    <br />
-                    <Card>
-                      <p className="m-0">
-                        <span> {cryptoData && `1.00 ${selectedCoin} = $${cryptoData[selectedCurrency].toFixed(2)}`} </span>
-                        <p style={{ fontWeight: 'lighter', fontSize: '14px' }} >Valor de {selectedCoin} el {formatteedDateSelected}</p>
-                      </p>
-                    </Card>
-                  </div>
-                </div>
+                <div className="text-center font-bold">
+                  <div className="flex flex-column md:flex-row">
+                    <Dropdown
+                      value={selectedCoin}
+                      onChange={(e) => setSelectedCoin(e.value)}
+                      options={transformedOptions}
+                      placeholder="Selecciona una moneda"
+                      className="w-full m-1"
+                      filter
+                      tooltip="Moneda seleccionada" tooltipOptions={{ position: 'top' }}
+                    />
 
-              </div>
-              <div className="col-12 lg:col-6 imagenes">
-                <div>
-                  {
-                    estado === 1 && (<img src={redarrow} alt="" style={{ height: '20vh', alignItems: 'center' }} />)
-                  }
-                  {
-                    estado === 2 && (<img src={greenarrow} alt="" style={{ height: '20vh', alignItems: 'center' }} />)
-                  }
+                    <Calendar
+                      value={date}
+                      onChange={(e) => setDate(e.value)}
+                      minDate={minDate}
+                      maxDate={maxDate}
+                      readOnlyInput
+                      showIcon
+                      className="w-full m-1"
+                      placeholder="Selecciona la fecha de compra"
+                      tooltip="Fecha de compra" tooltipOptions={{ position: 'top' }}
+                    />
+                    <Button label='Buscar' onClick={prices} icon="pi pi-search" className="custom-button m-1"
+                      disabled={!selectedCoin || !date} />
+
+                    <div>
+                      <Dropdown disabled={cryptoData === null} value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.value)} options={currencyOptions} filter
+                        placeholder="USD" tooltip="Selecciona el tipo de cambio" tooltipOptions={{ position: 'top' }} className="w-full m-1" />
+                    </div>
+                  </div>
                   <br />
-                  <span>{message}</span>
+
+                  <div className="grid justify-content-center">
+                    <div className="col-12 lg:col-6">
+                      <div hidden={!showConverter}>
+                        <div className="card">
+                          <Card>
+                            <p className="m-0">
+                              <span> {cryptoData && `1.00 ${selectedCoin} = $${cryptos.find(coin => coin.id === selectedCoin)?.current_price.toFixed(2)}`} </span>
+                              <p style={{ fontWeight: 'lighter', fontSize: '14px' }} >Valor actual de {selectedCoin} el {formatedDate}</p>
+                            </p>
+                          </Card>
+                          <br />
+                          <Card>
+                            <p className="m-0">
+                              <span> {cryptoData && `1.00 ${selectedCoin} = $${cryptoData[selectedCurrency].toFixed(2)}`} </span>
+                              <p style={{ fontWeight: 'lighter', fontSize: '14px' }} >Valor de {selectedCoin} el {formatteedDateSelected}</p>
+                            </p>
+                          </Card>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div className="col-12 lg:col-6 imagenes">
+                      <div>
+                        {
+                          estado === 1 && (<img src={redarrow} alt="" style={{ height: '20vh', alignItems: 'center' }} />)
+                        }
+                        {
+                          estado === 2 && (<img src={greenarrow} alt="" style={{ height: '20vh', alignItems: 'center' }} />)
+                        }
+                        <br />
+                        <span>{message}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </>
+        ) : (
+          <div className="grid">
+            <div className="col-12">
+              <Message text="No se pudo completar la peticion, espere un minuto e intente nuevamente." severity='error'></Message>
+            </div>
           </div>
-        </div>
-      </div>
+        )
+      }
+
       <br />
       <br />
       <div hidden={!showConverter}>
@@ -197,11 +212,11 @@ export const CryptoConverter = () => {
               <div className="flex flex-column md:flex-row justify-content-center">
                 <div className="flex align-items-center w-full m-1">
                   <InputText readOnly className="w-full text-center m-1" value={`Valor anterior: $${resultado.toFixed(2)}`}
-                    tooltip="Valor con el tipo de cambio solicitado" tooltipOptions={{ position: 'top' }} style={{backgroundColor: 'whitesmoke'}}/>
+                    tooltip="Valor con el tipo de cambio solicitado" tooltipOptions={{ position: 'top' }} style={{ backgroundColor: 'whitesmoke' }} />
                 </div>
                 <div className="flex align-items-center w-full m-1">
                   <InputText readOnly className="w-full text-center m-1" value={`Valor actual: $${resultadoActual.toFixed(2)}`}
-                    tooltip="Valor con el tipo de cambio solicitado" tooltipOptions={{ position: 'top' }} style={{backgroundColor: 'whitesmoke'}}/>
+                    tooltip="Valor con el tipo de cambio solicitado" tooltipOptions={{ position: 'top' }} style={{ backgroundColor: 'whitesmoke' }} />
                 </div>
               </div>
             </div>

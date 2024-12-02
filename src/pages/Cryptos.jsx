@@ -12,10 +12,12 @@ import { Dropdown } from 'primereact/dropdown';
 import { BarChartCrypto } from '../components/BarChartCrypto';
 import { CryptoConverter } from '../components/CryptoConverter';
 import { MultiSelect } from 'primereact/multiselect';
+import { Message } from 'primereact/message';
 
 export const Cryptos = () => {
   const dispatch = useDispatch();
   const cryptos = useSelector((state) => state?.cryptos?.cryptos);
+  const errors = useSelector((state) => state?.cryptos?.error);
   const cryptosLabels = useSelector((state) => state?.cryptos?.cryptosLabels);
   const cryptosHistory = useSelector((state) => state?.cryptos?.historyCryptoData);
   //const [selectedCoin, setSelectedCoin] = useState(null);
@@ -23,6 +25,7 @@ export const Cryptos = () => {
   const [selectedCoins, setSelectedCoins] = useState([]);
   const [selectedCoinsData, setSelectedCoinsData] = useState([]);
   const [selectedLapso, setSelectedLapso] = useState(null);
+  const maxSelection = 5;
 
   const lapso = [{ label: '5 días', value: 5 },
   { label: '10 días', value: 10 },
@@ -64,7 +67,11 @@ export const Cryptos = () => {
   // };
 
   const capitalizeFirstLetter = (string) => { return string.charAt(0).toUpperCase() + string.slice(1); };
-  const transformedOptions = cryptosLabels.map((label) => ({ label: capitalizeFirstLetter(label), value: label, }));  
+  const transformedOptions = cryptosLabels.map((label) => ({ label: capitalizeFirstLetter(label), value: label, }));
+
+  const handleSelectionChange = (e) => { if (e.value.length <= maxSelection) { setSelectedCoins(e.value); } }; 
+  const isOptionDisabled = (option) => { return selectedCoins.length >= maxSelection && !selectedCoins.includes(option); }; 
+  const options = transformedOptions.map(option => ({ ...option, disabled: isOptionDisabled(option) }));
 
   return (
     <>
@@ -85,10 +92,11 @@ export const Cryptos = () => {
 
                   <MultiSelect
                     value={selectedCoins}
-                    onChange={(e) => setSelectedCoins(e.value)}
+                    onChange={handleSelectionChange}
                     options={transformedOptions} optionLabel="label" display="chip"
                     placeholder="Selecciona monedas"
-                    maxSelectedLabels={3}
+                    maxSelectedLabels={5}
+                    maxSelectedItems={5}
                     className="w-full m-1"
                     filter />
 
@@ -121,20 +129,34 @@ export const Cryptos = () => {
                 </div>
               </div>
             </div>
-            <CryptosTable datos={selectedCoinsData.length === 0 ? cryptos : selectedCoinsData}></CryptosTable>
-            <br />
-            <div hidden={cryptosHistory.length > 0}>
-              <BarChart datos={cryptos}></BarChart>
-            </div>
-            <div hidden={cryptosHistory.length === 0}>
-              <BarChartCrypto datos={cryptosHistory} dias={selectedLapso} monedas={selectedCoinsData}></BarChartCrypto>
-            </div>
+
+            {
+              !errors ? (
+                <>
+                  <CryptosTable datos={selectedCoinsData.length === 0 ? cryptos : selectedCoinsData}></CryptosTable>
+                  <br />
+                  <div hidden={cryptosHistory.length > 0}>
+                    <BarChart datos={cryptos}></BarChart>
+                  </div>
+                  <div hidden={cryptosHistory.length === 0}>
+                    <BarChartCrypto datos={cryptosHistory} dias={selectedLapso} monedas={selectedCoinsData}></BarChartCrypto>
+                  </div>
+                </>
+              ) : (
+                <div className="grid">
+                  <div className="col-12">
+                      <Message text="No se pudo completar la peticion, espere un minuto e intente nuevamente." severity='error'></Message>
+                    </div>
+                </div>
+                )
+            }
+
           </TabPanel>
           <TabPanel header="Calcular mi ganancia" leftIcon="pi pi-dollar m-2">
             <CryptoConverter></CryptoConverter>
           </TabPanel>
         </TabView>
-      </div>
+      </div >
     </>
   )
 }
